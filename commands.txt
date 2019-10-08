@@ -4,6 +4,17 @@ install docker image:
 docker network create somenetwork
 docker run -d --name elasticsearch --net somenetwork -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.4.0
 
-add shakespeare-mapping into es7
-submit data: 
+submit mapping data: 
 curl -H "Content-Type: application/json" -XPUT localhost:9200/shakespeare --data-binary @shakes-mapping.json
+
+submit concrete data: 
+curl -H "Content-Type: application/json" -XPOST 'localhost:9200/_bulk' --data-binary @shakespeare_7.0.json
+
+issue a json request to es server in the shakespeare index and issue a search querry in nice formate results
+curl -H "content-type: application/json" -XGET localhost:9200/shakespeare/_search?pretty -d `
+hit enter
+{
+> "query":{
+> "match_phrase":{
+> "text_entry":"to be or not to be"}}}
+> '
