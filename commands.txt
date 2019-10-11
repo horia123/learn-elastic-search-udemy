@@ -27,3 +27,6 @@ PUT /testindex
 		"number_of_replicas":1
 	}
 }
+
+==> 3 primary shards and 1 replica of each => 6 shards
+shards ^ replicas = total no of shards.
