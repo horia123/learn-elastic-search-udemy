@@ -18,3 +18,12 @@ hit enter
 > "match_phrase":{
 > "text_entry":"to be or not to be"}}}
 > '
+
+Nb of shards can be set up front via PUT Command via REST / HTTP:
+PUT /testindex
+{
+	"settings":{
+		"number_of_shards":3,
+		"number_of_replicas":1
+	}
+}
