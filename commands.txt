@@ -30,3 +30,42 @@ PUT /testindex
 
 ==> 3 primary shards and 1 replica of each => 6 shards
 shards + shards * replicas = total no of shards.
+
+---------------SECTION 2: MAPPING AND INDEXED DATA----------------------------------------------------
+
+Define a Mapping for the movie index
+curl -XPUT localhost:9200/movies -d'
+{
+	"mappings":{
+		"properties":{
+			"year":{"type":"date"}
+		}
+	}
+}
+
+GET MAPPING:
+curl -H "Content-Type: application/json" -XGET localhost:9200/movies/_mapping
+
+INSERT a movie into mapping: 
+curl -H "Content-Type: application/json" -XPOST localhost:9200/movies/_doc/109487 -d `
+{
+	"genre":["IMAX", "Sci-Fi"],
+	"title":"Interstellar",
+	"year":"2014"
+}`
+
+
+GET Elastic Search Content: 
+curl -H "Content-Type: application/json" -XGET localhost:9200/movies/_search?pretty
+
+
+INSERT MANY with BULK API:
+curl -H "content-type: application/json"  -XPUT localhost:9200/_bulk -d
+{"create": {"_index": "movies", "_id":"133569"}}
+{"id":"133569", "title":"Star Trek Beyond", "year":2016, "genre":["Action", "Sci-Fi", "Adventure"]}
+
+{"create": {"_index": "movies", "_id":"122859"}}
+{"id":"133569", "title":"Inglorious Basterds", "year":2009, "genre":["Action", "History", "Adventure"]}
+
+
+UPDATE DOCUMENT: 
